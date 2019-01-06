@@ -41,5 +41,5 @@ Gem::Specification.new do |spec|
   spec.add_development_test 'ffaker'
   spec.add_development_test 'pry'
   spec.add_development_test 'rspec'
-  spec.add_development_test'rubocop-rspec'
-  spec.add_development_test'simplecov'
+  spec.add_development_test 'rubocop-rspec'
+  spec.add_development_test 'simplecov'
