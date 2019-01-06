@@ -32,14 +32,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'i18n'
   spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency 'fasterer'
-  spec.add_development_dependency 'overcommit'
-  spec.add_development_dependency 'pry'
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_test 'ffaker'
-  spec.add_development_test 'pry'
-  spec.add_development_test 'rspec'
-  spec.add_development_test 'rubocop-rspec'
-  spec.add_development_test 'simplecov'
+  spec.add_development_dependency 'ffaker'
