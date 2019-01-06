@@ -42,4 +42,4 @@ Gem::Specification.new do |spec|
   spec.add_development_test 'pry'
   spec.add_development_test 'rspec'
   spec.add_development_test'rubocop-rspec'
-  spec.add_development_test'simplecov', require: false
+  spec.add_development_test'simplecov'
