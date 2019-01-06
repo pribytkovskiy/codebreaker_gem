@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe ValidatableEntity do
+RSpec.describe Codebreaker::ValidatableEntity do
   subject(:validatable_entity) { described_class.new }
 
   let(:some_error) { 'Invalid input' }
