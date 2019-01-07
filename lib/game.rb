@@ -1,47 +1,66 @@
 module Codebreaker
   class Game
-    attr_reader :secret_code, :end_game
+    attr_reader :secret_code, :end_game, :attempts, :hints, :hint_array_view
 
     RANGE_FOR_SECRET_CODE = (1..6).freeze
     SIGNS_FOR_SECRET_CODE = (1..4).freeze
 
-    def initialize
+    DIFFICULTIES = {
+      easy: { hints: 2, attempts: 15, level: 'easy' },
+      medium: { hints: 1, attempts: 10, level: 'medium' },
+      hell: { hints: 1, attempts: 5, level: 'hell' }
+    }.freeze
+
+    def initialize(name, level)
+      @hint_array_view = []
       @secret_code = random
       @end_game = false
     end
 
+    def self.open
+      File.open('./db/statistics.txt', 'r'){ |f| f.read }
+    end
+
     def difficulty(difficulty)
-      @total_attempts = @attempts = difficulty[:attempts]
-      @total_hints = @hints = difficulty[:hints]
-      @level = difficulty[:level]
+      @total_attempts = attempts = DIFFICULTIES["#{difficulty}".to_sym][attempts]
+      @total_hints = hints = DIFFICULTIES["#{difficulty}".to_sym][hints]
+      @level = DIFFICULTIES["#{difficulty}".to_sym][level]
     end
 
     def end_game?
       @end_game
     end
 
-    def statistics
-      "Status: #{@status}, level: #{@level}, secret code: #{@secret_code}, attempts total: #{@total_attempts},
-      attempts used: #{@total_attempts - @attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - @hints}"
-    end
-
     def guess(code)
       @code = code.split('').map(&:to_i)
-      @attempts -= 1
+      attempts -= 1
       check_win
       check_attempts
       mark
     end
 
     def hint
-      return I18n.t(:no_hint) if @hints.zero?
+      return I18n.t(:no_hint) if hints.zero?
 
-      @hints -= 1
+      hints -= 1
       @hint_array ||= @secret_code.shuffle
-      @hint_array.pop
+      @hint_array_view << @hint_array.pop
+      hint_array_view
     end
 
     private
+
+    def statistics
+      "Status: #{@status}, level: #{@level}, secret code: #{@secret_code}, attempts total: #{@total_attempts},
+      attempts used: #{@total_attempts - attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - hints}"
+    end
+
+    def save(name)
+      File.open('./db/statistics.txt', 'a') do |f|
+        f.puts 'Name: ', name, statistik, Time.now, '<br>'
+        f.puts "------------------------------<br>"
+      end
+    end
 
     def random
       SIGNS_FOR_SECRET_CODE.map { rand(RANGE_FOR_SECRET_CODE) }
@@ -57,7 +76,7 @@ module Codebreaker
     end
 
     def check_attempts
-      return exit_with_status(I18n.t(:no_attempts)) if @attempts.zero?
+      return exit_with_status(I18n.t(:no_attempts)) if attempts.zero?
     end
 
     def mark
