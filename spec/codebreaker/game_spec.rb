@@ -146,5 +146,12 @@ module Codebreaker
         expect(game.instance_variable_get(:@status)).to eq(message)
       end
     end
+
+    context 'when #open' do
+      it 'call open' do
+        allow(File).to receive(:open)
+        described_class.send(:open)
+      end
+    end
   end
 end
