@@ -51,7 +51,7 @@ module Codebreaker
 
     def save
       File.open('./db/statistics.txt', 'a') do |f|
-        f.puts 'Name: ', @name, statistik, Time.now, '<br>'
+        f.puts 'Name: ', @name, statistics, Time.now, '<br>'
         f.puts "------------------------------<br>"
       end
     end
