@@ -2,9 +2,9 @@ require 'spec_helper'
 
 module Codebreaker
   RSpec.describe Codebreaker::Game do
-    subject(:game) { described_class.new }
+    subject(:game) { described_class.new('Dima') }
 
-    let(:difficult) { { level: 'hell', attempts: 5, hints: 1 } }
+    let(:difficult) { :hell }
     let(:message) { 'message' }
     let(:hints) { 2 }
     let(:code) { [1, 2, 3, 4] }
@@ -47,12 +47,12 @@ module Codebreaker
         game.instance_variable_set(:@status, 'Win')
         game.instance_variable_set(:@level, 'hell')
         game.instance_variable_set(:@secret_code, code_string)
-        expect(game.statistics).to include('Win', 'hell', code_string)
+        expect(game.send(:statistics)).to include('Win', 'hell', code_string)
       end
 
       it 'return statistics is a String' do
         game.difficulty(difficult)
-        expect(game.statistics).to be_is_a(String)
+        expect(game.send(:statistics)).to be_is_a(String)
       end
     end
 
@@ -131,7 +131,7 @@ module Codebreaker
 
       it 'return one number of secret code' do
         game.instance_variable_set(:@hints, hints)
-        expect(game.instance_variable_get(:@secret_code)).to include(game.hint)
+        expect(game.instance_variable_get(:@secret_code)).to include(game.hint.first)
       end
     end
 

@@ -1,9 +1,10 @@
 require 'codebreaker/version'
-require 'game'
-require 'validatable_entity'
-require 'validation'
 require 'i18n'
-require 'locale_config'
+
+require_relative 'locale_config'
+require_relative 'game'
+require_relative 'validatable_entity'
+require_relative 'validation'
 
 module Codebreaker
   # Your code goes here...

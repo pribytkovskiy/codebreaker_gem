@@ -11,7 +11,7 @@ module Codebreaker
       hell: { hints: 1, attempts: 5, level: 'hell' }
     }.freeze
 
-    def initialize(name, level)
+    def initialize(name)
       @hint_array_view = []
       @secret_code = random
       @end_game = false
@@ -22,9 +22,9 @@ module Codebreaker
     end
 
     def difficulty(difficulty)
-      @total_attempts = attempts = DIFFICULTIES["#{difficulty}".to_sym][attempts]
-      @total_hints = hints = DIFFICULTIES["#{difficulty}".to_sym][hints]
-      @level = DIFFICULTIES["#{difficulty}".to_sym][level]
+      @total_attempts = @attempts = DIFFICULTIES["#{difficulty}".to_sym][:attempts]
+      @total_hints = @hints = DIFFICULTIES["#{difficulty}".to_sym][:hints]
+      @level = DIFFICULTIES["#{difficulty}".to_sym][:level]
     end
 
     def end_game?
@@ -33,7 +33,7 @@ module Codebreaker
 
     def guess(code)
       @code = code.split('').map(&:to_i)
-      attempts -= 1
+      @attempts -= 1
       check_win
       check_attempts
       mark
@@ -42,7 +42,7 @@ module Codebreaker
     def hint
       return I18n.t(:no_hint) if hints.zero?
 
-      hints -= 1
+      @hints -= 1
       @hint_array ||= @secret_code.shuffle
       @hint_array_view << @hint_array.pop
       hint_array_view
@@ -52,7 +52,7 @@ module Codebreaker
 
     def statistics
       "Status: #{@status}, level: #{@level}, secret code: #{@secret_code}, attempts total: #{@total_attempts},
-      attempts used: #{@total_attempts - attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - hints}"
+      attempts used: #{@total_attempts - @attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - @hints}"
     end
 
     def save(name)
