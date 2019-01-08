@@ -23,7 +23,7 @@ module Codebreaker
     end
 
     def difficulty(difficulty)
-      @total_attempts = @attempts = DIFFICULTIES["#{difficulty}".to_sym][:attempts] + 1
+      @total_attempts = @attempts = DIFFICULTIES["#{difficulty}".to_sym][:attempts]
       @total_hints = @hints = DIFFICULTIES["#{difficulty}".to_sym][:hints]
       @level = DIFFICULTIES["#{difficulty}".to_sym][:level]
     end
@@ -49,18 +49,18 @@ module Codebreaker
       hint_array_view
     end
 
-    private
-
-    def statistics
-      "Status: #{@status}, level: #{@level}, secret code: #{@secret_code}, attempts total: #{@total_attempts},
-      attempts used: #{@total_attempts - @attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - @hints}"
-    end
-
     def save
       File.open('./db/statistics.txt', 'a') do |f|
         f.puts 'Name: ', @name, statistik, Time.now, '<br>'
         f.puts "------------------------------<br>"
       end
+    end
+
+    private
+
+    def statistics
+      "Status: #{@status}, level: #{@level}, secret code: #{@secret_code}, attempts total: #{@total_attempts},
+      attempts used: #{@total_attempts - @attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - @hints}"
     end
 
     def random
