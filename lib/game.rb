@@ -1,6 +1,6 @@
 module Codebreaker
   class Game
-    attr_reader :secret_code, :end_game, :attempts, :hints, :hint_array_view, :name
+    attr_reader :secret_code, :end_game, :attempts, :hints, :hint_array_view, :name, :status
 
     RANGE_FOR_SECRET_CODE = (1..6).freeze
     SIGNS_FOR_SECRET_CODE = (1..4).freeze
@@ -23,7 +23,7 @@ module Codebreaker
     end
 
     def difficulty(difficulty)
-      @total_attempts = @attempts = DIFFICULTIES["#{difficulty}".to_sym][:attempts]
+      @total_attempts = @attempts = DIFFICULTIES["#{difficulty}".to_sym][:attempts] + 1
       @total_hints = @hints = DIFFICULTIES["#{difficulty}".to_sym][:hints]
       @level = DIFFICULTIES["#{difficulty}".to_sym][:level]
     end
@@ -56,7 +56,7 @@ module Codebreaker
       attempts used: #{@total_attempts - @attempts}, hints total:#{@total_hints}, hints used: #{@total_hints - @hints}"
     end
 
-    def save(name)
+    def save
       File.open('./db/statistics.txt', 'a') do |f|
         f.puts 'Name: ', @name, statistik, Time.now, '<br>'
         f.puts "------------------------------<br>"
@@ -73,11 +73,11 @@ module Codebreaker
     end
 
     def check_win
-      return exit_with_status(I18n.t(:win)) if @code == @secret_code
+      return exit_with_status(:win) if @code == @secret_code
     end
 
     def check_attempts
-      return exit_with_status(I18n.t(:no_attempts)) if attempts.zero?
+      return exit_with_status(:no_attempts) if attempts.zero?
     end
 
     def mark
