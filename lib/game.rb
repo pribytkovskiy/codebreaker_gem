@@ -1,6 +1,6 @@
 module Codebreaker
   class Game
-    attr_reader :secret_code, :end_game, :attempts, :hints, :hint_array_view
+    attr_reader :secret_code, :end_game, :attempts, :hints, :hint_array_view, :name
 
     RANGE_FOR_SECRET_CODE = (1..6).freeze
     SIGNS_FOR_SECRET_CODE = (1..4).freeze
@@ -11,7 +11,7 @@ module Codebreaker
       hell: { hints: 1, attempts: 5, level: 'hell' }
     }.freeze
 
-    def initialize(name)
+    def initialize(name = nil)
       @hint_array_view = []
       @secret_code = random
       @end_game = false
