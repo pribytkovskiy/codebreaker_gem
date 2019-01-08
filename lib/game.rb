@@ -15,9 +15,10 @@ module Codebreaker
       @hint_array_view = []
       @secret_code = random
       @end_game = false
+      @name = name
     end
 
-    def self.open
+    def open
       File.open('./db/statistics.txt', 'r'){ |f| f.read }
     end
 
@@ -57,7 +58,7 @@ module Codebreaker
 
     def save(name)
       File.open('./db/statistics.txt', 'a') do |f|
-        f.puts 'Name: ', name, statistik, Time.now, '<br>'
+        f.puts 'Name: ', @name, statistik, Time.now, '<br>'
         f.puts "------------------------------<br>"
       end
     end

@@ -150,7 +150,7 @@ module Codebreaker
     context 'when #open' do
       it 'call open' do
         allow(File).to receive(:open)
-        described_class.send(:open)
+        described_class.open
       end
     end
   end
