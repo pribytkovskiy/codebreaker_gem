@@ -43,7 +43,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.0.1)
+  bundler (~> 1.16)
   codebreaker!
   rake (~> 10.0)
   rspec (~> 3.0)
