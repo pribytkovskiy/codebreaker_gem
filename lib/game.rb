@@ -11,6 +11,9 @@ module Codebreaker
       hell: { hints: 1, attempts: 5, level: 'hell' }
     }.freeze
 
+    PATH = './db/statistics.yml'.freeze
+    WHITE_LIST = [Game].freeze
+
     def initialize(name = nil)
       @hint_array_view = []
       @secret_code = random
@@ -54,6 +57,14 @@ module Codebreaker
         f.puts 'Name: ', @name, statistics, Time.now, '<br>'
         f.puts "------------------------------<br>"
       end
+    end
+
+    def save_yml
+      File.open("#{PATH}", 'w') { |f| f.write self.to_yaml }
+    end
+
+    def load
+      YAML.safe_load(File.read("#{PATH}"), WHITE_LIST, [], [], true)
     end
 
     private
