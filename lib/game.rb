@@ -2,7 +2,7 @@ module Codebreaker
   class Game
     attr_reader :secret_code, :end_game, :total_attempts, :total_hints,
                 :attempts, :hints, :hint_array_view, :name, :status,
-                :date
+                :date, level
 
     RANGE_FOR_SECRET_CODE = (1..6).freeze
     SIGNS_FOR_SECRET_CODE = (1..4).freeze
@@ -62,7 +62,7 @@ module Codebreaker
     end
 
     def save_yml
-      @data = Time.now 
+      @data = Time.now
       array_game = load
       array_game << self
       File.open(PATH, 'w') { |f| f.write array_game.to_yaml }
