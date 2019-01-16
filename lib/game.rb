@@ -2,7 +2,7 @@ module Codebreaker
   class Game
     attr_reader :secret_code, :end_game, :total_attempts, :total_hints,
                 :attempts, :hints, :hint_array_view, :name, :status,
-                :date, level
+                :date, :level
 
     RANGE_FOR_SECRET_CODE = (1..6).freeze
     SIGNS_FOR_SECRET_CODE = (1..4).freeze
