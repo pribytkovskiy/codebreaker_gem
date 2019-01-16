@@ -62,7 +62,7 @@ module Codebreaker
     end
 
     def save_yml
-      @data = Time.now
+      @date = Time.now
       array_game = load
       array_game << self
       File.open(PATH, 'w') { |f| f.write array_game.to_yaml }
